@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # Frontend Application
+  histopath-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    networks:
+      - histopath-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Optional: Backend API (uncomment if you add a backend)
+  # histopath-api:
+  #   image: node:20-alpine
+  #   working_dir: /app
+  #   volumes:
+  #     - ./api:/app
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - NODE_ENV=production
+  #     - GEMINI_API_KEY=${GEMINI_API_KEY}
+  #   command: npm start
+  #   restart: unless-stopped
+  #   networks:
+  #     - histopath-network
+
+  # Optional: Database (uncomment if needed)
+  # postgres:
+  #   image: postgres:15-alpine
+  #   environment:
+  #     POSTGRES_DB: histopath
+  #     POSTGRES_USER: histopath
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
+  #   restart: unless-stopped
+  #   networks:
+  #     - histopath-network
+
+networks:
+  histopath-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

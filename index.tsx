@@ -1,4 +1,5 @@
 
+import './index.css';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideZonelessChangeDetection } from '@angular/core';
 // FIX: Corrected import path for AppComponent to be relative.
