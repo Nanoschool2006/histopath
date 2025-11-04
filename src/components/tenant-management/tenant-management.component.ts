@@ -4,12 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { UiService } from '../../services/ui.service';
 import { TenantService } from '../../services/tenant.service';
 import { Tenant } from '../../models';
-import { AccessControlComponent } from '../access-control/access-control.component';
 
 @Component({
   selector: 'app-tenant-management',
   standalone: true,
-  imports: [CommonModule, FormsModule, AccessControlComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './tenant-management.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

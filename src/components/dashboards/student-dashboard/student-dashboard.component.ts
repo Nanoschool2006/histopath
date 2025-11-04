@@ -1,14 +1,13 @@
 import { ChangeDetectionStrategy, Component, computed, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
-import { LeaderboardComponent } from '../../leaderboard/leaderboard.component';
 import { CaseListComponent } from '../../case-list/case-list.component';
 import { CaseService } from '../../../services/case.service';
 
 @Component({
   selector: 'app-student-dashboard',
   standalone: true,
-  imports: [CommonModule, LeaderboardComponent, CaseListComponent],
+  imports: [CommonModule, CaseListComponent],
   templateUrl: './student-dashboard.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
