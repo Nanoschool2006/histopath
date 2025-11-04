@@ -1,0 +1,250 @@
+<div class="bg-white text-gray-800 antialiased">
+  <!-- Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-lg border-b border-gray-200 shadow-md">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="text-2xl font-bold">Patho<span class="text-blue-600">Genius</span></div>
+      <nav class="hidden md:flex items-center space-x-8">
+        <a href="#features" (click)="setActiveSection('features')" class="transition-colors duration-200" [class]="activeSection() === 'features' ? 'text-blue-600 font-semibold' : 'text-gray-600 hover:text-blue-600'">Features</a>
+        <a href="#how-it-works" (click)="setActiveSection('how-it-works')" class="transition-colors duration-200" [class]="activeSection() === 'how-it-works' ? 'text-blue-600 font-semibold' : 'text-gray-600 hover:text-blue-600'">How it Works</a>
+        <a href="#testimonials" (click)="setActiveSection('testimonials')" class="transition-colors duration-200" [class]="activeSection() === 'testimonials' ? 'text-blue-600 font-semibold' : 'text-gray-600 hover:text-blue-600'">Testimonials</a>
+      </nav>
+      <button (click)="onLaunchApp()" class="bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg hover:bg-blue-700 shadow-md hover:shadow-lg transform hover:scale-105 transition-all">Launch App</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-bg pt-40 pb-24">
+      <div class="container mx-auto px-6 text-center animate-fade-in">
+        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-gray-900">
+          The Future of Pathology, Powered by AI
+        </h1>
+        <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">
+          Empowering pathologists with state-of-the-art artificial intelligence to enhance diagnostic accuracy, streamline workflows, and accelerate patient care.
+        </p>
+        <div class="mt-8 flex justify-center gap-x-4">
+          <button (click)="onLaunchApp()" class="bg-blue-600 text-white font-semibold px-8 py-3 rounded-lg text-lg hover:bg-blue-700 transition-colors shadow-lg transform hover:scale-105">
+            Request a Demo
+          </button>
+           <a href="#features" class="bg-white text-blue-600 font-semibold px-8 py-3 rounded-lg text-lg ring-1 ring-inset ring-gray-300 hover:bg-gray-50 transition-colors transform hover:scale-105">
+            Learn More
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Disclaimer Section -->
+    <section id="disclaimer" class="py-12 bg-amber-50 border-y border-amber-200">
+      <div class="container mx-auto px-6">
+        <div class="max-w-3xl mx-auto flex items-start">
+          <div class="flex-shrink-0">
+            <svg class="w-6 h-6 text-amber-500 mt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+            </svg>
+          </div>
+          <div class="ml-4">
+            <h2 class="text-lg font-bold text-amber-800">For Course Demonstration Purposes Only</h2>
+            <p class="text-amber-700 mt-1">
+              This application is a proof-of-concept created for a course demonstration. It is <strong class="font-semibold">NOT</strong> intended for real-time clinical use, patient diagnosis, or any form of patient care. All patient data, cases, and analysis results are simulated and do not represent real medical information.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+     <!-- Intro Section -->
+    <section class="py-24 bg-white">
+      <div class="container mx-auto px-6 text-center">
+        <h2 class="text-4xl font-bold tracking-tight text-gray-900">A Smarter Workflow from Slide to Report</h2>
+        <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600">Our platform integrates seamlessly into your lab, providing powerful tools at every step of the diagnostic process.</p>
+      </div>
+    </section>
+
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 bg-gray-50">
+      <div class="container mx-auto px-6">
+        <div class="space-y-24">
+          
+          <!-- Feature 1: From Pixels to Insights -->
+          <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <span class="text-sm font-bold tracking-wider uppercase text-blue-600">From Pixels to Insights, Instantly</span>
+              <h3 class="mt-2 text-3xl font-bold tracking-tight text-gray-900">Turn Raw Data into Actionable Insights</h3>
+              <p class="mt-4 text-gray-600">
+                Leverage our Gemini-powered AI to perform comprehensive analysis of whole slide images. It identifies cellular morphologies, quantifies biomarkers, and highlights areas of interest with incredible speed and accuracy.
+              </p>
+              <ul class="mt-6 space-y-4">
+                <li class="flex items-start"><svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><div><strong>Detect & Classify Malignancies:</strong> Identify cancerous cells and suggest diagnoses with high confidence scores.</div></li>
+                <li class="flex items-start"><svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><div><strong>Automated Quantification:</strong> Automatically count mitotic figures and quantify biomarker expression (e.g., Ki-67, PD-L1).</div></li>
+                <li class="flex items-start"><svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><div><strong>Interactive Heatmaps:</strong> Visualize areas of concern on the whole slide image to guide your review process efficiently.</div></li>
+              </ul>
+            </div>
+            <div class="mockup-window"><div class="mockup-header"></div><img src="https://picsum.photos/seed/ai_analysis_overlay/600/400" alt="AI heatmap overlay on a digital pathology slide" class="w-full h-auto rounded-b-lg bg-gray-200 object-cover"></div>
+          </div>
+
+          <!-- Feature 2: Collaborate with Confidence -->
+          <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="md:order-last">
+              <span class="text-sm font-bold tracking-wider uppercase text-blue-600">Collaborate with Confidence</span>
+              <h3 class="mt-2 text-3xl font-bold tracking-tight text-gray-900">A Platform Built for Teamwork</h3>
+              <p class="mt-4 text-gray-600">Seamlessly request second opinions, share specific annotations, and hold real-time case discussions. A complete audit trail ensures every action is tracked for compliance and quality assurance.</p>
+              <ul class="mt-6 space-y-4">
+                 <li class="flex items-start"><svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><div><strong>Instant Consultations:</strong> Request a second opinion from a colleague with a single click, directing the case to their queue.</div></li>
+                <li class="flex items-start"><svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><div><strong>Shared Workspace:</strong> All annotations and comments are synced in real-time for transparent collaboration.</div></li>
+                <li class="flex items-start"><svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><div><strong>Centralized Dashboard:</strong> Manage your case queue, prioritize STAT cases, and track every case from accession to sign-out.</div></li>
+              </ul>
+            </div>
+            <div class="mockup-window"><div class="mockup-header"></div><img src="https://picsum.photos/seed/digital_pathology_dashboard/600/400" alt="Collaborative workspace showing annotations" class="w-full h-auto rounded-b-lg bg-gray-200 object-cover"></div>
+          </div>
+
+          <!-- Feature 3: Accelerate Your Research -->
+          <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <span class="text-sm font-bold tracking-wider uppercase text-blue-600">Accelerate Your Research</span>
+               <h3 class="mt-2 text-3xl font-bold tracking-tight text-gray-900">Build Complex Data Cohorts in Seconds</h3>
+              <p class="mt-4 text-gray-600">Move beyond individual cases. Utilize our natural language query engine to analyze model performance, compare findings across patient histories, and uncover trends that drive the next generation of medical breakthroughs.</p>
+              <ul class="mt-6 space-y-4">
+                 <li class="flex items-start"><svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><div><strong>Natural Language Queries:</strong> Describe the cohort you need in plain English and let the AI build the dataset for you.</div></li>
+                <li class="flex items-start"><svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><div><strong>Longitudinal Insights:</strong> Track disease progression and treatment response across a patient's entire case history.</div></li>
+                <li class="flex items-start"><svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><div><strong>Federated Learning:</strong> Participate in multi-institutional studies to train more robust models without sharing sensitive patient data.</div></li>
+              </ul>
+            </div>
+            <div class="mockup-window"><div class="mockup-header"></div><img src="https://picsum.photos/seed/genomic_data_visualization/600/400" alt="Data visualization dashboard for research cohorts" class="w-full h-auto rounded-b-lg bg-gray-200 object-cover"></div>
+          </div>
+
+          <!-- Feature 4: Secure and Scalable -->
+          <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="md:order-last">
+              <span class="text-sm font-bold tracking-wider uppercase text-blue-600">Secure, Scalable, and Integrated</span>
+              <h3 class="mt-2 text-3xl font-bold tracking-tight text-gray-900">Enterprise-Grade Architecture</h3>
+              <p class="mt-4 text-gray-600">Manage your entire organization with ease. Our platform features granular role-based access control, real-time monitoring of LIS/EHR integrations, and a HIPAA-compliant architecture.</p>
+              <ul class="mt-6 space-y-4">
+                 <li class="flex items-start"><svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><div><strong>Role-Based Access Control:</strong> Define custom roles and permissions to ensure users only see the data they need.</div></li>
+                <li class="flex items-start"><svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><div><strong>Integration Monitoring:</strong> A centralized dashboard for administrators to monitor the health of all system integrations.</div></li>
+                <li class="flex items-start"><svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><div><strong>HIPAA-Compliant:</strong> Built from the ground up with security and patient privacy as our top priority.</div></li>
+              </ul>
+            </div>
+            <div class="mockup-window"><div class="mockup-header"></div><img src="https://picsum.photos/seed/medical_data_security/600/400" alt="System administration dashboard showing integration health" class="w-full h-auto rounded-b-lg bg-gray-200 object-cover"></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- How it Works Section -->
+    <section id="how-it-works" class="py-24 bg-white">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold tracking-tight text-gray-900">Simple, Fast, and Secure</h2>
+          <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600">A straightforward process to integrate AI into your daily work.</p>
+        </div>
+        <div class="relative max-w-4xl mx-auto">
+          <div class="absolute left-1/2 top-12 h-0.5 w-2/3 -translate-x-1/2 bg-gray-200 hidden md:block" aria-hidden="true"></div>
+          <div class="grid md:grid-cols-3 gap-12 text-center relative">
+            <!-- Step 1 -->
+            <div>
+              <div class="how-it-works-icon-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l-3.75 3.75M12 9.75l3.75 3.75M3 17.25V6.75A2.25 2.25 0 015.25 4.5h13.5A2.25 2.25 0 0121 6.75v10.5A2.25 2.25 0 0118.75 19.5H5.25A2.25 2.25 0 013 17.25z" /></svg>
+              </div>
+              <h3 class="mt-6 text-xl font-semibold text-gray-900">Upload or Integrate</h3>
+              <p class="mt-2 text-gray-600">Securely upload whole slide images or connect directly with your existing LIS and scanner for automated case ingestion.</p>
+            </div>
+            <!-- Step 2 -->
+            <div>
+              <div class="how-it-works-icon-wrapper">
+                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.898 20.624L16.5 21.75l-.398-1.126a3.375 3.375 0 00-2.456-2.456L12.75 18l1.126-.398a3.375 3.375 0 002.456-2.456L16.5 14.25l.398 1.126a3.375 3.375 0 002.456 2.456L20.25 18l-1.126.398a3.375 3.375 0 00-2.456 2.456z" /></svg>
+              </div>
+              <h3 class="mt-6 text-xl font-semibold text-gray-900">Run AI Analysis</h3>
+              <p class="mt-2 text-gray-600">Our models analyze the slide, providing a comprehensive report with diagnostic suggestions and annotations in seconds.</p>
+            </div>
+            <!-- Step 3 -->
+            <div>
+              <div class="how-it-works-icon-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              </div>
+              <h3 class="mt-6 text-xl font-semibold text-gray-900">Review & Finalize</h3>
+              <p class="mt-2 text-gray-600">Review the AI's findings in our intuitive viewer. Verify, edit, or add your own annotations and diagnoses before signing out the final report.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials-bg py-24 bg-gray-50">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold tracking-tight text-gray-900">Trusted by Leading Pathologists</h2>
+        </div>
+        <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-8">
+          <div class="testimonial-card">
+            <svg class="w-10 h-10 text-gray-200 mb-4" fill="currentColor" viewBox="0 0 32 32"><path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.896 3.456-8.352 9.12-8.352 15.36 0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L25.864 4z"></path></svg>
+            <p class="text-gray-600">"This platform has cut our diagnostic turnaround time by nearly 40%. The AI's accuracy on routine cases is remarkable."</p>
+            <div class="mt-6 font-semibold text-gray-900">Dr. Evelyn Reed</div>
+            <div class="text-sm text-gray-500">Chief of Pathology, General Hospital</div>
+          </div>
+          <div class="testimonial-card">
+            <svg class="w-10 h-10 text-gray-200 mb-4" fill="currentColor" viewBox="0 0 32 32"><path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.896 3.456-8.352 9.12-8.352 15.36 0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L25.864 4z"></path></svg>
+            <p class="text-gray-600">"The ability to quickly get a 'second look' from the AI on complex cases is invaluable. It acts as a safety net and boosts my diagnostic confidence."</p>
+            <div class="mt-6 font-semibold text-gray-900">Dr. Kenji Tanaka</div>
+            <div class="text-sm text-gray-500">Digital Pathology Specialist</div>
+          </div>
+          <div class="testimonial-card">
+            <svg class="w-10 h-10 text-gray-200 mb-4" fill="currentColor" viewBox="0 0 32 32"><path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.896 3.456-8.352 9.12-8.352 15.36 0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L25.864 4z"></path></svg>
+            <p class="text-gray-600">"The research tools are a game-changer. Building cohorts for our latest study took hours instead of weeks."</p>
+            <div class="mt-6 font-semibold text-gray-900">Dr. Ben Carter</div>
+            <div class="text-sm text-gray-500">Clinical Researcher</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section id="cta" class="py-24 bg-gray-800 cta-bg">
+      <div class="container mx-auto px-6 text-center">
+        <h2 class="text-4xl font-bold tracking-tight text-white">Ready to Transform Your Lab?</h2>
+        <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-300">Join the growing number of labs embracing the future of digital pathology. Get in touch for a personalized demo and see how our platform can work for you.</p>
+        <div class="mt-8">
+          <button (click)="onLaunchApp()" class="bg-white text-blue-600 font-semibold px-8 py-3 rounded-lg text-lg hover:bg-blue-50 transition-colors shadow-lg transform hover:scale-105">Get Started Today</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-gray-200">
+    <div class="container mx-auto px-6 py-12">
+        <div class="grid md:grid-cols-4 gap-8">
+            <div class="col-span-1">
+                 <div class="text-2xl font-bold">Patho<span class="text-blue-600">Genius</span></div>
+                 <p class="mt-2 text-sm text-gray-500">&copy; 2025 All rights reserved.</p>
+            </div>
+            <div class="col-span-3 grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase">Company</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">About</a></li>
+                        <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">Careers</a></li>
+                        <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">Contact</a></li>
+                    </ul>
+                </div>
+                 <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase">Community</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">Contributors</a></li>
+                    </ul>
+                </div>
+                 <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase">Legal</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">Privacy Policy</a></li>
+                        <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+  </footer>
+</div>

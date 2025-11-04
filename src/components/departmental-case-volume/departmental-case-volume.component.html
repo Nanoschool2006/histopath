@@ -1,0 +1,15 @@
+<div class="bg-white shadow rounded-lg p-5">
+  <div class="flex items-center space-x-3">
+    <svg class="h-7 w-7 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h15.75c.621 0 1.125.504 1.125 1.125v6.75c0 .621-.504 1.125-1.125 1.125H4.125A1.125 1.125 0 013 19.875v-6.75zM3 8.625c0-.621.504-1.125 1.125-1.125h15.75c.621 0 1.125.504 1.125 1.125v.375c0 .621-.504 1.125-1.125 1.125H4.125A1.125 1.125 0 013 9V8.625zM3.75 3.75A1.875 1.875 0 015.625 1.875h12.75c1.036 0 1.875.84 1.875 1.875v3.75c0 1.036-.84 1.875-1.875 1.875H5.625A1.875 1.875 0 013.75 7.5v-3.75z" />
+    </svg>
+    <h4 class="text-md font-medium text-gray-500">Departmental Case Volume</h4>
+  </div>
+  @if(volume(); as v) {
+    <div class="mt-2 pl-10">
+      <p class="text-4xl font-bold text-gray-900">{{ v.count | number }}</p>
+      <p class="text-sm text-gray-500">Cases this month</p>
+      <p class="mt-1 text-sm font-medium text-green-600">+{{ v.change }}% from last month</p>
+    </div>
+  }
+</div>

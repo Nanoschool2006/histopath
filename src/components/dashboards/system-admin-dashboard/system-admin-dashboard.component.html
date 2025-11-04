@@ -1,0 +1,213 @@
+<div class="space-y-6">
+  <!-- Header -->
+  <div>
+    <h2 class="text-2xl font-semibold text-gray-800">System Administration</h2>
+    @if (currentUser(); as user) {
+      <p class="mt-1 text-md text-gray-600">Welcome, {{ user.name }}. Monitor system health and manage global configurations.</p>
+    }
+  </div>
+
+  <!-- Main Grid Layout -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    
+    <!-- Left/Main Column -->
+    <div class="lg:col-span-2 space-y-6">
+      
+      <!-- System Health Stats -->
+      @let health = systemHealth();
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
+        <!-- Overall Status -->
+        <div class="bg-white p-5 shadow rounded-lg flex items-center space-x-4">
+          <div class="bg-green-100 rounded-full p-3">
+            <svg class="h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div>
+            <dt class="text-sm font-medium text-gray-500 truncate">Overall Status</dt>
+            <dd class="text-2xl font-semibold text-green-600">Operational</dd>
+          </div>
+        </div>
+
+        <!-- API Latency -->
+        <div class="bg-white p-5 shadow rounded-lg flex items-center space-x-4">
+          <div class="bg-blue-100 rounded-full p-3">
+            <svg class="h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div>
+            <dt class="text-sm font-medium text-gray-500 truncate">API Latency</dt>
+            <dd class="text-2xl font-semibold text-gray-900">{{ health.apiLatency }}ms</dd>
+          </div>
+        </div>
+
+        <!-- Database -->
+        <div class="bg-white p-5 shadow rounded-lg flex items-center space-x-4">
+          <div class="bg-purple-100 rounded-full p-3">
+             <svg class="h-6 w-6 text-purple-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375" />
+            </svg>
+          </div>
+          <div>
+            <dt class="text-sm font-medium text-gray-500 truncate">Database</dt>
+            <dd class="text-2xl font-semibold text-gray-900">Connected</dd>
+          </div>
+        </div>
+
+        <!-- AI Service Status -->
+        <div class="bg-white p-5 shadow rounded-lg flex items-center space-x-4">
+          <div class="bg-yellow-100 rounded-full p-3">
+             <svg class="h-6 w-6 text-yellow-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.898 20.624L16.5 21.75l-.398-1.126a3.375 3.375 0 00-2.456-2.456L12.75 18l1.126-.398a3.375 3.375 0 002.456-2.456L16.5 14.25l.398 1.126a3.375 3.375 0 002.456 2.456L20.25 18l-1.126.398a3.375 3.375 0 00-2.456 2.456z" />
+            </svg>
+          </div>
+          <div>
+            <dt class="text-sm font-medium text-gray-500 truncate">AI Service</dt>
+            <dd class="text-2xl font-semibold text-gray-900">{{ health.aiModelStatus }}</dd>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent System Errors -->
+      <div class="bg-white shadow rounded-lg">
+        <div class="px-6 py-5">
+          <h3 class="text-lg leading-6 font-medium text-gray-900">Recent System Errors</h3>
+        </div>
+        <div class="flow-root px-6 pb-6 max-h-96 overflow-y-auto custom-scrollbar">
+            @if (recentErrors().length > 0) {
+              <ul role="list" class="divide-y divide-gray-200">
+                @for (error of recentErrors(); track error.id) {
+                  <li class="py-4">
+                    <div class="flex space-x-3">
+                      <div class="flex-shrink-0 pt-0.5">
+                        <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
+                        </svg>
+                      </div>
+                      <div class="min-w-0 flex-1">
+                        <p class="text-sm font-medium text-gray-900">{{ error.context }}</p>
+                        <p class="text-sm text-gray-500">{{ error.message }}</p>
+                        <div class="mt-1 flex items-center space-x-4 text-xs text-gray-400">
+                           <span>{{ getFormattedDate(error.timestamp) }}</span>
+                           <span>Ref: <span class="font-mono">{{ error.id }}</span></span>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                }
+              </ul>
+            } @else {
+               <div class="text-center py-10">
+                <svg class="mx-auto h-12 w-12 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <h3 class="mt-2 text-sm font-semibold text-gray-900">No recent errors</h3>
+                <p class="mt-1 text-sm text-gray-500">The system error log is clear.</p>
+              </div>
+            }
+        </div>
+      </div>
+    </div>
+
+    <!-- Right/Sidebar Column -->
+    <div class="lg:col-span-1 space-y-6">
+      <!-- System Configuration -->
+      <div class="bg-white p-6 shadow rounded-lg">
+        <h3 class="text-lg font-medium text-gray-900">Configuration</h3>
+        <div class="mt-4 space-y-3">
+          <button (click)="goToRoleManagement()" class="w-full text-left block p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition">
+            <p class="font-semibold text-gray-800">Manage Roles & Permissions</p>
+            <p class="text-sm text-gray-500">Define user roles and control access to features.</p>
+          </button>
+          <button (click)="openNotificationSettings()" class="w-full text-left block p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition">
+            <p class="font-semibold text-gray-800">Notification Settings</p>
+            <p class="text-sm text-gray-500">Configure system-wide email alerts.</p>
+          </button>
+          <button (click)="openAuditLog()" class="w-full text-left block p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition">
+            <p class="font-semibold text-gray-800">Security & Audits</p>
+            <p class="text-sm text-gray-500">Review security logs and settings.</p>
+          </button>
+        </div>
+      </div>
+      <!-- System Actions -->
+      <div class="bg-white p-6 shadow rounded-lg">
+        <h3 class="text-lg font-medium text-gray-900">System Actions</h3>
+        <div class="mt-4 grid grid-cols-2 gap-4">
+          <button (click)="showClearCacheConfirm.set(true)" [disabled]="isPerformingAction() !== null" class="flex flex-col items-center justify-center p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition disabled:cursor-not-allowed disabled:opacity-50">
+            @if (isPerformingAction() === 'cache') {
+              <svg class="animate-spin h-7 w-7 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+            } @else {
+              <svg class="h-7 w-7 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>
+            }
+            <span class="mt-2 text-xs font-medium text-gray-700">Clear Cache</span>
+          </button>
+           <button (click)="showRestartConfirm.set(true)" [disabled]="isPerformingAction() !== null" class="flex flex-col items-center justify-center p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition disabled:cursor-not-allowed disabled:opacity-50">
+             @if (isPerformingAction() === 'restart') {
+              <svg class="animate-spin h-7 w-7 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+            } @else {
+              <svg class="h-7 w-7 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0011.667 0l3.182-3.182m0 0a8.25 8.25 0 00-11.667 0l-3.182 3.182M2.985 19.644l-3.182-3.182a8.25 8.25 0 0111.667 0l3.181 3.183" /></svg>
+            }
+            <span class="mt-2 text-xs font-medium text-gray-700">Restart Services</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Clear Cache Confirm Modal -->
+@if (showClearCacheConfirm()) {
+  <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+      <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+        <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+          <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+            <div class="sm:flex sm:items-start">
+              <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-yellow-100 sm:mx-0 sm:h-10 sm:w-10">
+                <svg class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" /></svg>
+              </div>
+              <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                <h3 class="text-base font-semibold leading-6 text-gray-900">Clear System Cache?</h3>
+                <div class="mt-2"><p class="text-sm text-gray-500">This action may temporarily slow down the application for some users as caches are rebuilt. Are you sure you want to proceed?</p></div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+            <button type="button" (click)="confirmClearCache()" class="inline-flex w-full justify-center rounded-md bg-yellow-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-yellow-500 sm:ml-3 sm:w-auto">Clear Cache</button>
+            <button type="button" (click)="showClearCacheConfirm.set(false)" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Restart Services Confirm Modal -->
+@if (showRestartConfirm()) {
+  <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+      <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+        <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+          <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+            <div class="sm:flex sm:items-start">
+              <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" /></svg>
+              </div>
+              <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                <h3 class="text-base font-semibold leading-6 text-gray-900">Restart All Services?</h3>
+                <div class="mt-2"><p class="text-sm text-gray-500">This will cause a brief service interruption for all users. This action should only be taken to resolve critical system issues. Are you sure you want to proceed?</p></div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+            <button type="button" (click)="confirmRestartServices()" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Restart Services</button>
+            <button type="button" (click)="showRestartConfirm.set(false)" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

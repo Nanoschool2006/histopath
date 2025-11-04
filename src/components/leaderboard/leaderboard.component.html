@@ -1,0 +1,46 @@
+<div class="bg-white shadow rounded-lg">
+  <div class="px-4 py-5 sm:p-6">
+    <div class="flex items-center space-x-3">
+      <svg class="h-8 w-8 text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path fill-rule="evenodd" d="M15.22 6.268a.75.75 0 01.968-.432l5.942 2.28a.75.75 0 010 1.368l-5.942 2.28a.75.75 0 01-.968-.432V6.268zM5.166 14.527a.75.75 0 01-1.218.818l-2.774-3.84a.75.75 0 010-.818l2.774-3.84a.75.75 0 011.218.818L3.295 12l1.87 2.527z" clip-rule="evenodd" />
+        <path fill-rule="evenodd" d="M12.75 3a.75.75 0 01.75.75v16.5a.75.75 0 01-1.5 0V3.75A.75.75 0 0112.75 3zM6.923 7.21a.75.75 0 01.818-1.218l3.84 2.774a.75.75 0 010 1.218l-3.84 2.774a.75.75 0 01-.818-1.218L9.566 12l-2.643-1.88z" clip-rule="evenodd" />
+      </svg>
+      <h3 class="text-lg leading-6 font-medium text-gray-900">Top Contributors</h3>
+    </div>
+    <div class="mt-6 flow-root">
+      <ul role="list" class="-my-5 divide-y divide-gray-200">
+        @for (user of leaderboard().slice(0, 5); track user.id; let i = $index) {
+          <li class="py-4">
+            <div class="flex items-center space-x-4">
+              <div class="flex-shrink-0">
+                @if (i === 0) {
+                  <span class="text-2xl">🏆</span>
+                } @else if (i === 1) {
+                  <span class="text-2xl">🥈</span>
+                } @else if (i === 2) {
+                  <span class="text-2xl">🥉</span>
+                } @else {
+                  <span class="flex items-center justify-center h-8 w-8 rounded-full bg-gray-100 text-gray-600 font-semibold">{{ i + 1 }}</span>
+                }
+              </div>
+              <div class="min-w-0 flex-1">
+                <p class="truncate text-sm font-medium text-gray-900">{{ user.name }}</p>
+                <p class="truncate text-sm text-gray-500">{{ user.role }}</p>
+              </div>
+              <div>
+                <span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-1 text-sm font-semibold text-blue-800">
+                  {{ user.feedbackPoints }} pts
+                </span>
+              </div>
+            </div>
+          </li>
+        }
+      </ul>
+    </div>
+    <div class="mt-6">
+      <button (click)="showLeaderboardPage()" class="w-full inline-flex items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+        View Full Leaderboard
+      </button>
+    </div>
+  </div>
+</div>

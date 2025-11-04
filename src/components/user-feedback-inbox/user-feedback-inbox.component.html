@@ -1,0 +1,79 @@
+<div class="bg-white shadow sm:rounded-lg">
+  <div class="px-4 py-5 sm:p-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+      <div class="flex items-center space-x-3">
+        <svg class="h-8 w-8 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+        </svg>
+        <h2 class="text-xl font-semibold text-gray-900">User Feedback Inbox</h2>
+      </div>
+      <div class="mt-4 sm:mt-0 flex items-center space-x-4">
+        <select name="status" [ngModel]="filterStatus()" (ngModelChange)="filterStatus.set($event)" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+          <option value="All">All Statuses</option>
+          <option value="New">Submitted</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Resolved">Resolved</option>
+          <option value="Closed">Closed</option>
+        </select>
+        <select name="type" [ngModel]="filterType()" (ngModelChange)="filterType.set($event)" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+          <option value="All">All Types</option>
+          <option value="Bug">Bug Report</option>
+          <option value="Error">Error Report</option>
+          <option value="Suggestion">Suggestion</option>
+          <option value="Question">Question</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Feedback Table -->
+    <div class="mt-6">
+      <div class="overflow-x-auto">
+        <div class="inline-block min-w-full align-middle">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead>
+              <tr>
+                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Details</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 bg-white">
+              @for (item of filteredFeedback(); track item.id) {
+                <tr class="hover:bg-gray-50">
+                  <td class="py-4 pl-4 pr-3 text-sm sm:pl-0">
+                    <p class="font-medium text-gray-800">{{ item.description }}</p>
+                    <div class="mt-1 text-xs text-gray-500">
+                      <span>{{ getFeedbackTypeLabel(item.type) }} by </span>
+                      <span class="font-semibold">{{ item.submittedByName }}</span>
+                      <span>• {{ getRelativeDate(item.submittedAt) }}</span>
+                      @if(item.attachment) {
+                        <a href="#" class="ml-4 font-semibold text-blue-600 hover:underline">↑ View Screenshot</a>
+                      }
+                    </div>
+                  </td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm">
+                    <div class="flex items-center">
+                      <svg viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 mr-1.5" [class]="getStatusClass(item.status)">
+                        @if (item.status === 'Resolved' || item.status === 'New') {
+                          <path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm-.924-4.524l4.347-4.348a.75.75 0 10-1.06-1.06L7.25 8.689 5.664 7.104a.75.75 0 10-1.06 1.06l2.122 2.121a.75.75 0 001.06 0z" clip-rule="evenodd" />
+                        } @else {
+                           <path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zM8 4a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 018 4zM8 12a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                        }
+                      </svg>
+                      <span class="font-medium" [class]="getStatusClass(item.status)">{{ item.status === 'New' ? 'Submitted' : item.status }}</span>
+                    </div>
+                  </td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="2" class="px-6 py-10 text-center text-sm text-gray-500">
+                    No feedback items match your filters.
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

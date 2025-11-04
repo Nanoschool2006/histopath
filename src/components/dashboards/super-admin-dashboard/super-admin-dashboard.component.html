@@ -1,0 +1,25 @@
+<div class="space-y-6">
+  <!-- Header -->
+  <div>
+    <h1 class="text-3xl font-bold tracking-tight text-gray-900">Super Admin Dashboard</h1>
+    @if (currentUser(); as user) {
+      <p class="mt-2 text-lg text-gray-600">Welcome back, {{ user.name }}! You have full system access.</p>
+    }
+  </div>
+
+  <!-- User Feedback Inbox -->
+  <app-user-feedback-inbox></app-user-feedback-inbox>
+
+  <!-- Global Integration Status -->
+  <app-global-integration-status></app-global-integration-status>
+  
+  <!-- Lower Grid: Models & Changelog -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="lg:col-span-2">
+      <app-model-management></app-model-management>
+    </div>
+    <div class="lg:col-span-1">
+      <app-changelog></app-changelog>
+    </div>
+  </div>
+</div>

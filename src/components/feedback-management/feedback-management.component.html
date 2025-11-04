@@ -1,0 +1,129 @@
+<div class="space-y-6">
+  <div>
+    <button (click)="goBack()" class="inline-flex items-center text-sm font-medium text-gray-600 hover:text-gray-900">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 mr-2">
+        <path fill-rule="evenodd" d="M17 10a.75.75 0 0 1-.75.75H5.612l4.158 3.96a.75.75 0 1 1-1.04 1.08l-5.5-5.25a.75.75 0 0 1 0-1.08l5.5-5.25a.75.75 0 1 1 1.04 1.08L5.612 9.25H16.25A.75.75 0 0 1 17 10Z" clip-rule="evenodd" />
+      </svg>
+      Back to Dashboard
+    </button>
+  </div>
+
+  <div class="bg-white shadow sm:rounded-lg">
+    <div class="px-4 py-5 sm:p-6">
+      <h3 class="text-lg leading-6 font-medium text-gray-900">Feedback Inbox</h3>
+      <p class="mt-1 max-w-2xl text-sm text-gray-500">Review, accept, or reject user feedback submissions.</p>
+    </div>
+    <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+      <ul class="divide-y divide-gray-200">
+        @for (item of allFeedback(); track item.id) {
+          <li class="p-4 sm:p-6">
+            <div class="flex items-start justify-between">
+              <!-- Left side: content -->
+              <div class="flex-1 pr-6">
+                <div class="flex items-center space-x-3">
+                  <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium" [class]="getTypeClass(item.type)">{{ item.type }}</span>
+                  <h4 class="text-base font-semibold text-gray-900">{{ item.title }}</h4>
+                </div>
+                <p class="mt-2 text-sm text-gray-600 whitespace-pre-wrap">{{ item.description }}</p>
+                <div class="mt-2 text-xs text-gray-500">
+                  Submitted by <span class="font-medium">{{ item.submittedByName }}</span> on <span>{{ getFormattedDate(item.submittedAt) }}</span>
+                </div>
+              </div>
+              <!-- Right side: status and actions -->
+              <div class="w-48 flex-shrink-0 text-right">
+                @if (item.status === 'In Progress') {
+                  <select [ngModel]="item.status" (change)="updateStatus(item.id, $event)" class="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" [class]="getStatusClass(item.status)">
+                    <option value="In Progress">In Progress</option>
+                    <option value="Resolved">Resolved</option>
+                    <option value="Closed">Closed</option>
+                  </select>
+                } @else {
+                  <span class="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium" [class]="getStatusClass(item.status)">{{ item.status }}</span>
+                }
+                @if (item.priority) {
+                  <span class="mt-2 inline-flex items-center rounded-full px-3 py-1 text-sm font-medium" [class]="getPriorityClass(item.priority)">{{ item.priority }}</span>
+                }
+              </div>
+            </div>
+            <!-- Admin Notes & Actions -->
+            <div class="mt-4 border-t border-gray-200 pt-4">
+                @if (item.admin_comment) {
+                  <div class="bg-gray-50 rounded-lg p-3">
+                    <p class="text-sm font-semibold text-gray-800">Admin Notes:</p>
+                    <p class="text-sm text-gray-600 whitespace-pre-wrap">{{ item.admin_comment }}</p>
+                    @if (item.target_resolution_date) {
+                      <p class="mt-1 text-xs text-gray-500">Target Date: <span class="font-medium">{{ getFormattedDate(item.target_resolution_date) }}</span></p>
+                    }
+                  </div>
+                }
+                @if (item.status === 'New') {
+                  <div class="flex justify-end space-x-3 mt-4">
+                    <button (click)="openReviewModal(item, 'reject')" class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Reject</button>
+                    <button (click)="openReviewModal(item, 'accept')" class="rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500">Accept</button>
+                  </div>
+                }
+            </div>
+          </li>
+        } @empty {
+          <div class="text-center py-10 px-6">
+            <svg class="mx-auto h-12 w-12 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.012-1.244h3.86M2.25 13.5a2.25 2.25 0 000-4.5h3.86a2.25 2.25 0 012.012-1.244l.256-.512a2.25 2.25 0 002.013-1.244h3.218a2.25 2.25 0 002.013 1.244l.256.512a2.25 2.25 0 012.012 1.244h3.86a2.25 2.25 0 000 4.5h-3.86a2.25 2.25 0 01-2.012-1.244l-.256-.512a2.25 2.25 0 00-2.013-1.244H8.384a2.25 2.25 0 00-2.013 1.244l-.256.512a2.25 2.25 0 01-2.012 1.244H2.25z" />
+            </svg>
+            <h3 class="mt-2 text-sm font-semibold text-gray-900">No feedback</h3>
+            <p class="mt-1 text-sm text-gray-500">The feedback inbox is empty.</p>
+          </div>
+        }
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Review Modal -->
+@if (showReviewModal()) {
+  <div class="relative z-20" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+      <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+        <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+          <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+            <h3 class="text-lg font-semibold leading-6 text-gray-900" id="modal-title">
+              {{ reviewAction() === 'accept' ? 'Accept Feedback' : 'Reject Feedback' }}
+            </h3>
+            <div class="mt-2">
+              <p class="text-sm text-gray-500">
+                {{ reviewAction() === 'accept' ? 'Allocate priority and timeline for this feedback.' : 'Provide a reason for rejecting this feedback.' }}
+              </p>
+            </div>
+            <div class="mt-4 space-y-4">
+              @if (reviewAction() === 'accept') {
+                <div>
+                  <label for="priority" class="block text-sm font-medium leading-6 text-gray-900">Priority (Weight)</label>
+                  <select id="priority" name="priority" [ngModel]="reviewPriority()" (ngModelChange)="reviewPriority.set($event)" class="mt-1 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-blue-600 sm:text-sm sm:leading-6">
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                    <option value="Critical">Critical</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="target-date" class="block text-sm font-medium leading-6 text-gray-900">Target Resolution Date (Optional)</label>
+                  <input type="date" name="target-date" id="target-date" [ngModel]="reviewTargetDate()" (ngModelChange)="reviewTargetDate.set($event)" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6">
+                </div>
+              }
+              <div>
+                <label for="admin-comment" class="block text-sm font-medium leading-6 text-gray-900">
+                  {{ reviewAction() === 'accept' ? 'Internal Comment (Optional)' : 'Reason for Rejection' }}
+                </label>
+                <textarea id="admin-comment" name="admin-comment" rows="3" [ngModel]="reviewComment()" (ngModelChange)="reviewComment.set($event)" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+            <button (click)="submitReview()" type="button" class="inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto" [class]="reviewAction() === 'accept' ? 'bg-blue-600 hover:bg-blue-500' : 'bg-red-600 hover:bg-red-500'">Confirm</button>
+            <button (click)="closeReviewModal()" type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}
