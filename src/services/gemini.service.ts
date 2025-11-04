@@ -10,10 +10,10 @@ export class GeminiService {
   readonly isConfigured: boolean = false;
 
   constructor() {
-    const apiKey = process.env.API_KEY;
+    const apiKey = 'AIzaSyC0nzrt8bKmnmuKG5pjG9-zbmwJFbs_KWw';
     if (apiKey) {
-      this.ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      this.isConfigured = true;
+      this.ai = new GoogleGenAI({ apiKey });
+      (this as any).isConfigured = true;
     } else {
       console.error('Deployment Error: The API_KEY environment variable is not set. Gemini features will be disabled.');
     }
