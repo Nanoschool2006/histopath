@@ -1,0 +1,144 @@
+<div class="space-y-6">
+  <div>
+    <button (click)="goBack()" class="inline-flex items-center text-sm font-medium text-gray-600 hover:text-gray-900">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 mr-2">
+        <path fill-rule="evenodd" d="M17 10a.75.75 0 0 1-.75.75H5.612l4.158 3.96a.75.75 0 1 1-1.04 1.08l-5.5-5.25a.75.75 0 0 1 0-1.08l5.5-5.25a.75.75 0 1 1 1.04 1.08L5.612 9.25H16.25A.75.75 0 0 1 17 10Z" clip-rule="evenodd" />
+      </svg>
+      Back to Dashboard
+    </button>
+  </div>
+
+  <div class="bg-white shadow sm:rounded-lg">
+    <div class="grid grid-cols-1 md:grid-cols-3">
+      <!-- Master: Role List -->
+      <div class="md:col-span-1 border-r border-gray-200">
+        <div class="px-4 py-5 sm:p-6">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-medium text-gray-900">Roles</h3>
+            <button (click)="startCreating()" type="button" class="inline-flex items-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500">
+              <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
+              </svg>
+              Add Role
+            </button>
+          </div>
+        </div>
+        <div class="border-t border-gray-200">
+          <ul role="list" class="divide-y divide-gray-200">
+            @for (role of roles(); track role.id) {
+              <li (click)="selectRole(role)" class="flex justify-between items-center px-4 py-4 sm:px-6 cursor-pointer hover:bg-gray-50"
+                  [class.bg-blue-50]="selectedRole()?.id === role.id">
+                <div class="flex-1">
+                  <p class="text-sm font-medium text-gray-900 truncate">{{ role.name }}</p>
+                  <p class="text-sm text-gray-500 truncate">{{ role.description }}</p>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-gray-400">
+                  <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                </svg>
+              </li>
+            }
+          </ul>
+        </div>
+      </div>
+
+      <!-- Detail: Form or Placeholder -->
+      <div class="md:col-span-2">
+        @if (!isDetailViewActive()) {
+          <div class="flex flex-col items-center justify-center h-full text-center text-gray-500 p-6">
+            <svg class="mx-auto h-12 w-12 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <h3 class="mt-2 text-sm font-semibold text-gray-900">Select a role</h3>
+            <p class="mt-1 text-sm text-gray-500">Select a role from the list to edit, or add a new one.</p>
+          </div>
+        } @else {
+          <form [formGroup]="roleForm" (ngSubmit)="saveRole()" class="h-full flex flex-col">
+            <div class="px-4 py-5 sm:p-6 flex-grow">
+              <h3 class="text-lg font-semibold leading-6 text-gray-900">
+                {{ isCreating() ? 'Add New Role' : 'Edit Role' }}
+              </h3>
+              <div class="mt-4 space-y-4">
+                <div>
+                  <label for="role-name" class="block text-sm font-medium leading-6 text-gray-900">Role Name</label>
+                  <input type="text" id="role-name" formControlName="name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6">
+                </div>
+                <div>
+                  <label for="role-desc" class="block text-sm font-medium leading-6 text-gray-900">Description</label>
+                  <textarea id="role-desc" rows="3" formControlName="description" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"></textarea>
+                </div>
+                <div [formGroupName]="'permissions'">
+                  <div class="flex justify-between items-center">
+                    <h4 class="text-sm font-medium leading-6 text-gray-900">Permissions</h4>
+                    <button (click)="toggleAllPermissions()" type="button" class="text-sm font-medium text-blue-600 hover:text-blue-500">
+                      @if (allPermissionsSelected()) {
+                        <span>Deselect All</span>
+                      } @else {
+                        <span>Select All</span>
+                      }
+                    </button>
+                  </div>
+                  <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-96 overflow-y-auto pr-2">
+                    @for(permission of allPermissions(); track permission.id) {
+                      <div class="relative flex items-start">
+                        <div class="flex h-6 items-center">
+                          <input [id]="permission.id" [formControlName]="permission.id" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-600">
+                        </div>
+                        <div class="ml-3 text-sm leading-6">
+                          <label [for]="permission.id" class="font-medium text-gray-900 cursor-pointer">{{permission.id}}</label>
+                          <p class="text-gray-500">{{ permission.description }}</p>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 sm:flex sm:px-6 items-center justify-between">
+              <div>
+                @if (!isCreating() && selectedRole()) {
+                  <button (click)="openDeleteConfirm(selectedRole()!)" type="button" class="text-red-600 hover:text-red-900 text-sm font-semibold">Delete Role</button>
+                }
+              </div>
+              <div class="flex justify-end space-x-3">
+                <button (click)="cancelEdit()" type="button" class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Cancel</button>
+                <button type="submit" [disabled]="roleForm.invalid" class="inline-flex justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 disabled:bg-blue-300">Save</button>
+              </div>
+            </div>
+          </form>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirm Modal -->
+@if (showDeleteConfirm()) {
+  <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+      <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+        <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+          <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+            <div class="sm:flex sm:items-start">
+              <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                </svg>
+              </div>
+              <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Delete Role</h3>
+                <div class="mt-2">
+                  <p class="text-sm text-gray-500">Are you sure you want to delete the role "{{ roleToDelete()?.name }}"? This action cannot be undone.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+            <button type="button" (click)="confirmDelete()" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Delete</button>
+            <button type="button" (click)="closeDeleteConfirm()" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

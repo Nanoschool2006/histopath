@@ -1,0 +1,37 @@
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <!-- Left/Main Column -->
+  <div class="lg:col-span-2 space-y-6">
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- My Open Cases -->
+        <div class="bg-white p-4 rounded-lg shadow" title="Cases assigned to you that are 'Awaiting Review' or 'In Review'">
+            <h3 class="text-sm font-medium text-gray-500 truncate">My Open Cases</h3>
+            <p class="mt-1 text-3xl font-semibold text-gray-900">{{ userStats().myOpenCases }}</p>
+        </div>
+        <!-- My STAT Cases -->
+        <div class="bg-white p-4 rounded-lg shadow" title="Urgent (STAT) cases assigned to you that are not yet completed">
+            <h3 class="text-sm font-medium text-gray-500 truncate">My STAT Cases</h3>
+            <p class="mt-1 text-3xl font-semibold text-red-600">{{ userStats().myStatCases }}</p>
+        </div>
+        <!-- My Completed Cases -->
+        <div class="bg-white p-4 rounded-lg shadow" title="Cases assigned to you that are 'Reported' or 'Closed'">
+            <h3 class="text-sm font-medium text-gray-500 truncate">My Completed Cases</h3>
+            <p class="mt-1 text-3xl font-semibold text-green-600">{{ userStats().myCompletedCases }}</p>
+        </div>
+    </div>
+
+    <!-- Performance Trends -->
+    <app-performance-trends [data]="performanceData()"></app-performance-trends>
+
+  </div>
+  <!-- Right/Sidebar Column -->
+  <div class="lg:col-span-1 space-y-6">
+    
+    <!-- Quality Assurance Metrics -->
+    <app-qa-metrics [metrics]="qaMetrics()"></app-qa-metrics>
+    
+    <!-- Task Manager -->
+    <app-task-manager></app-task-manager>
+
+  </div>
+</div>

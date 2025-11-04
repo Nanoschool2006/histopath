@@ -1,0 +1,37 @@
+<div class="bg-white p-6 rounded-lg shadow">
+  <div class="flex items-center space-x-3">
+    <div class="bg-blue-100 p-2 rounded-full flex items-center justify-center">
+      <svg class="w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.286zm0 13.036h.008v.008h-.008v-.008z" />
+      </svg>
+    </div>
+    <h3 class="text-lg font-semibold text-slate-800">Quality Assurance Metrics</h3>
+  </div>
+
+  @if (metrics(); as m) {
+    <div class="mt-4 space-y-3">
+      <!-- AI Concordance Rate -->
+      <div class="border border-gray-200 rounded-lg p-4" title="The percentage of your completed cases where the AI's initial diagnosis matched your final diagnosis.">
+        <p class="text-3xl font-bold text-green-600">{{ m.aiConcordanceRate | number:'1.1-1' }}%</p>
+        <p class="mt-1 text-sm font-semibold text-gray-800">AI Concordance Rate</p>
+        <p class="text-xs text-gray-500">Match rate between AI and final pathologist diagnosis.</p>
+      </div>
+
+      <!-- Average Turnaround Time -->
+      <div class="border border-gray-200 rounded-lg p-4" title="The average time it took you to complete cases from the date they were received. Calculated over the last 7 days.">
+        <p class="text-3xl font-bold text-blue-600">{{ m.avgTurnaroundTime | number:'1.1-1' }}h</p>
+        <p class="mt-1 text-sm font-semibold text-gray-800">Average Turnaround Time</p>
+        <p class="text-xs text-gray-500">Average time from case receipt to completion over last 7 days.</p>
+      </div>
+
+      <!-- User Annotation Rate -->
+      <div class="border border-gray-200 rounded-lg p-4" title="The percentage of your completed cases where you added at least one annotation to the slide.">
+        <p class="text-3xl font-bold text-orange-500">{{ m.userAnnotationRate | number:'1.0-0' }}%</p>
+        <p class="mt-1 text-sm font-semibold text-gray-800">User Annotation Rate</p>
+        <p class="text-xs text-gray-500">Percentage of completed cases with user-added annotations.</p>
+      </div>
+    </div>
+  } @else {
+    <p class="mt-4 text-sm text-gray-500">Metrics data is currently unavailable.</p>
+  }
+</div>

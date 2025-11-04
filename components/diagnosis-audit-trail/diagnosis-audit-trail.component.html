@@ -1,0 +1,78 @@
+<div class="bg-white shadow sm:rounded-lg">
+  <div class="px-4 py-5 sm:p-6">
+    <div class="flex items-center space-x-3">
+      <svg class="h-7 w-7 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c.502 0 1.004-.016 1.5-.046M12 21c-.502 0-1.004-.016-1.5-.046M12 3a9.004 9.004 0 00-8.716 6.747M12 3a9.004 9.004 0 018.716 6.747M12 3c.502 0 1.004.016 1.5.046M12 3c-.502 0-1.004.016-1.5.046M12 12a3 3 0 100-6 3 3 0 000 6z" />
+      </svg>
+      <h3 class="text-lg font-medium text-gray-900">Diagnosis Audit Trail</h3>
+    </div>
+
+    @if (auditData(); as data) {
+      <!-- Summary Section -->
+      <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 items-center">
+        <!-- Concordance Chart -->
+        <div class="flex flex-col items-center justify-center">
+          @if(chartData(); as chart) {
+            <div class="relative w-[70px] h-[70px] flex items-center justify-center">
+              <svg class="w-full h-full transform -rotate-90">
+                <circle class="text-gray-200" stroke-width="8" stroke="currentColor" fill="transparent" [attr.r]="chart.radius" [attr.cx]="chart.center" [attr.cy]="chart.center" />
+                <circle class="text-green-500" stroke-width="8" [attr.stroke-dasharray]="chart.circumference" [attr.stroke-dashoffset]="chart.offset" stroke-linecap="round" stroke="currentColor" fill="transparent" [attr.r]="chart.radius" [attr.cx]="chart.center" [attr.cy]="chart.center" />
+              </svg>
+              <span class="absolute text-xl font-bold text-gray-800">{{ chart.percentage }}%</span>
+            </div>
+            <p class="mt-2 text-sm font-medium text-gray-600">Concordance</p>
+          }
+        </div>
+        <!-- Stats -->
+        <div class="text-center">
+          <p class="text-3xl font-bold text-gray-800">{{ data.totalReviewed }}</p>
+          <p class="text-sm font-medium text-gray-600">Total Reviewed</p>
+        </div>
+        <div class="text-center">
+          <p class="text-3xl font-bold text-green-600">{{ data.concordant }}</p>
+          <p class="text-sm font-medium text-gray-600">Concordant</p>
+        </div>
+        <div class="text-center">
+          <p class="text-3xl font-bold text-yellow-600">{{ data.discordant }}</p>
+          <p class="text-sm font-medium text-gray-600">Discordant</p>
+        </div>
+      </div>
+      
+      <!-- Details Table -->
+      <div class="mt-6 flow-root">
+        <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead>
+                <tr>
+                  <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Case / Patient</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">AI Diagnosis</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Confidence</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pathologist Diagnosis</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 bg-white">
+                @for(item of data.cases; track item.id) {
+                  <tr>
+                    <td class="whitespace-pre-line py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{ item.casePatient }}</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ item.aiDiagnosis }}</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-900">{{ item.aiConfidence | number:'1.1-1' }}%</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ item.pathologistDiagnosis }}</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium" [class]="getStatusClass(item.status)">
+                        {{ item.status }}
+                      </span>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    } @else {
+      <p class="mt-4 text-center text-gray-500">Audit trail data is not available.</p>
+    }
+  </div>
+</div>

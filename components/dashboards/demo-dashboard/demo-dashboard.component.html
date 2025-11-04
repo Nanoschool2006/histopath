@@ -1,0 +1,9 @@
+<div class="text-center bg-white p-8 shadow rounded-lg">
+  <svg class="mx-auto h-12 w-12 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.158.79.44 1.059l.29.289c.282.282.665.44 1.06.44s.778-.158 1.06-.44l.29-.289c.282-.282.44-.645.44-1.06 0-.23-.035-.454-.1-.664M6.75 8.25h10.5M6.75 12h10.5m-10.5 3.75h10.5M4.5 6.75c0-1.24 1.01-2.25 2.25-2.25h10.5c1.24 0 2.25 1.01 2.25 2.25v10.5c0 1.24-1.01 2.25-2.25 2.25H6.75c-1.24 0-2.25-1.01-2.25-2.25V6.75Z" />
+  </svg>
+  @if (currentUser(); as user) {
+    <h2 class="mt-4 text-2xl font-semibold text-gray-800">Welcome to the Platform Demo, {{ user.name }}!</h2>
+  }
+  <p class="mt-2 text-md text-gray-600">This is a demonstration account. You can explore the UI by selecting different user roles from the dropdown in the header.</p>
+</div>

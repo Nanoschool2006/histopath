@@ -1,0 +1,27 @@
+<div class="space-y-6">
+  <!-- Header -->
+  <div>
+    <h1 class="text-3xl font-bold tracking-tight text-gray-900">Tenant Admin Dashboard</h1>
+  </div>
+
+  <!-- Main Grid Layout -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    
+    <!-- Left Column: User & Role Management -->
+    <div class="lg:col-span-2">
+      <app-user-role-management></app-user-role-management>
+    </div>
+
+    <!-- Right Column: Stats -->
+    <div class="lg:col-span-1 space-y-6">
+      <app-departmental-case-volume [volume]="caseVolume()"></app-departmental-case-volume>
+      <app-storage-consumption [storage]="storage()"></app-storage-consumption>
+      <app-tenant-integration-status [integrations]="integrations()"></app-tenant-integration-status>
+    </div>
+
+    <!-- Bottom Row: Audit Trail -->
+    <div class="lg:col-span-3">
+      <app-diagnosis-audit-trail [auditData]="auditTrail()"></app-diagnosis-audit-trail>
+    </div>
+  </div>
+</div>

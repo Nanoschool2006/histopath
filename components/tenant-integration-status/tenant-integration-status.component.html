@@ -1,0 +1,21 @@
+<div class="bg-white shadow rounded-lg p-5">
+  <div class="flex items-center space-x-3">
+     <svg class="h-7 w-7 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
+      </svg>
+    <h4 class="text-md font-medium text-gray-500">Integration Status</h4>
+  </div>
+  <div class="mt-3 pl-10">
+    <ul class="space-y-2">
+      @for(integration of integrations(); track integration.id) {
+        <li class="flex items-center justify-between">
+          <span class="text-sm font-medium text-gray-800">{{ integration.name }}</span>
+          <div class="flex items-center">
+            <div class="h-2 w-2 rounded-full mr-2" [class]="getStatusDotClass(integration.status)"></div>
+            <span class="text-sm text-gray-600">{{ integration.status === 'Error' ? 'Warning' : integration.status }}</span>
+          </div>
+        </li>
+      }
+    </ul>
+  </div>
+</div>

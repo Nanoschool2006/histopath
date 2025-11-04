@@ -1,0 +1,116 @@
+<div class="bg-white shadow sm:rounded-lg">
+  <div class="px-4 py-5 sm:p-6">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <svg class="h-7 w-7 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-2.42 8.25 8.25 0 00-4.121-11.536c-2.02-.743-4.166-.743-6.186 0a8.25 8.25 0 00-4.121 11.536 9.337 9.337 0 004.121 2.42 9.38 9.38 0 002.625-.372M15 12.75a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+        <h3 class="text-lg font-medium text-gray-900">User & Role Management</h3>
+      </div>
+      <div>
+        <button (click)="inviteUser()" type="button" class="inline-flex items-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500">Invite User</button>
+      </div>
+    </div>
+    
+    <!-- Tabs -->
+    <div class="mt-4">
+      <div class="border-b border-gray-200">
+        <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+          <button (click)="activeTab.set('users')"
+                  class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
+                  [class]="activeTab() === 'users' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'">
+            Users <span class="ml-1.5 rounded-full px-2 py-0.5 text-xs font-medium" [class]="activeTab() === 'users' ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-600'">{{tenantUsers().length}}</span>
+          </button>
+          <button (click)="activeTab.set('roles')"
+                  class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
+                  [class]="activeTab() === 'roles' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'">
+            Roles <span class="ml-1.5 rounded-full px-2 py-0.5 text-xs font-medium" [class]="activeTab() === 'roles' ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-600'">{{tenantRoles().length}}</span>
+          </button>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="mt-4">
+      @if (activeTab() === 'users') {
+        <div class="flow-root">
+          <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+              <table class="min-w-full divide-y divide-gray-300">
+                <thead>
+                  <tr>
+                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">User</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Role</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Password</th>
+                    <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0"><span class="sr-only">Actions</span></th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-white">
+                  @for(user of tenantUsers(); track user.id) {
+                    <tr>
+                      <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{ user.name }}</td>
+                      <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        <select [value]="user.role" class="block w-full max-w-xs rounded-md border-0 py-1 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-blue-600 sm:text-sm sm:leading-6">
+                           @for(role of tenantRoles(); track role.id) {
+                            <option [value]="role.name">{{ role.name }}</option>
+                           }
+                        </select>
+                      </td>
+                      <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        <div class="flex items-center space-x-2 font-mono">
+                          <span>evelynreed123!</span>
+                          <svg class="h-4 w-4 text-gray-400 cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
+                          </svg>
+                        </div>
+                      </td>
+                      <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                        <a href="#" class="text-red-600 hover:text-red-900">Remove</a>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      } @else {
+        <div class="flow-root">
+          <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+              <table class="min-w-full divide-y divide-gray-300">
+                <thead>
+                  <tr>
+                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Role</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Description</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Permissions</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-white">
+                  @for(role of tenantRoles(); track role.id) {
+                    <tr>
+                      <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{ role.name }}</td>
+                      <td class="whitespace-normal px-3 py-4 text-sm text-gray-500 max-w-xs">{{ role.description }}</td>
+                      <td class="px-3 py-4 text-sm text-gray-500">
+                        <div class="flex flex-wrap gap-1">
+                          @for(permission of role.permissions; track permission) {
+                            <span class="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                              {{ permission }}
+                            </span>
+                          }
+                          @if(role.permissions.length === 0) {
+                            <span class="text-xs text-gray-400">No permissions assigned</span>
+                          }
+                        </div>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

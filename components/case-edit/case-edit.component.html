@@ -1,0 +1,115 @@
+<div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+  <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+  <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+      <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+        <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+          <h3 class="text-lg font-semibold leading-6 text-gray-900" id="modal-title">Create New Case</h3>
+          <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-6">
+            <!-- Patient Name -->
+            <div class="sm:col-span-1">
+              <label for="patient-name" class="block text-sm font-medium leading-6 text-gray-900">Patient Full Name</label>
+              <input type="text" name="patient-name" id="patient-name" [ngModel]="newCaseData().patientName" (ngModelChange)="updateField('patientName', $event)" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6">
+            </div>
+
+            <!-- Patient MRN -->
+            <div class="sm:col-span-1">
+              <label for="patient-mrn" class="block text-sm font-medium leading-6 text-gray-900">Patient MRN</label>
+              <input type="text" name="patient-mrn" id="patient-mrn" [ngModel]="newCaseData().patientMrn" (ngModelChange)="updateField('patientMrn', $event)" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6">
+            </div>
+            
+            <!-- Patient DOB -->
+            <div class="sm:col-span-1">
+              <label for="patient-dob" class="block text-sm font-medium leading-6 text-gray-900">Patient Date of Birth</label>
+              <input type="date" name="patient-dob" id="patient-dob" [ngModel]="newCaseData().patientDob" (ngModelChange)="updateField('patientDob', $event)" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6">
+            </div>
+
+            <!-- Patient Gender -->
+            <div class="sm:col-span-1">
+              <label for="patient-gender" class="block text-sm font-medium leading-6 text-gray-900">Gender</label>
+              <select id="patient-gender" name="patient-gender" [ngModel]="newCaseData().patientGender" (ngModelChange)="updateField('patientGender', $event)" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <!-- Accession Number -->
+            <div class="sm:col-span-1">
+              <label for="accession-number" class="block text-sm font-medium leading-6 text-gray-900">Accession Number</label>
+              <input type="text" name="accession-number" id="accession-number" [ngModel]="newCaseData().accession_number" (ngModelChange)="updateField('accession_number', $event)" placeholder="e.g., S24-2001" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6">
+            </div>
+            
+            <!-- Priority -->
+            <div class="sm:col-span-1">
+              <label for="priority" class="block text-sm font-medium leading-6 text-gray-900">Priority</label>
+              <select id="priority" name="priority" [ngModel]="newCaseData().priority" (ngModelChange)="updateField('priority', $event)" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6">
+                <option value="Routine">Routine</option>
+                <option value="STAT">STAT</option>
+              </select>
+            </div>
+
+            <!-- Assigned To -->
+            <div class="sm:col-span-2">
+              <label for="assigned-to" class="block text-sm font-medium leading-6 text-gray-900">
+                {{ currentUser()?.role === 'StudentAdmin' ? 'Assign to Student' : 'Assigned Pathologist' }}
+              </label>
+              <select id="assigned-to" name="assigned-to" [ngModel]="newCaseData().assigned_to_id" (ngModelChange)="updateField('assigned_to_id', $event)" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6">
+                <option [ngValue]="null">Unassigned</option>
+                @for(user of assignableUsers(); track user.id) {
+                  <option [value]="user.id">{{ user.name }}</option>
+                }
+              </select>
+            </div>
+            
+            <!-- Clinical History -->
+            <div class="sm:col-span-2">
+              <label for="clinical-history" class="block text-sm font-medium leading-6 text-gray-900">Clinical History</label>
+              <textarea name="clinical-history" id="clinical-history" rows="4" [ngModel]="newCaseData().clinical_history" (ngModelChange)="updateField('clinical_history', $event)" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+          <button type="button" (click)="saveCase()" [disabled]="isSaveDisabled()" class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed">Save Case</button>
+          <button type="button" (click)="close()" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Confirmation Dialog -->
+@if (showConfirmation()) {
+  <div class="relative z-20" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+      <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+        <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+          <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+            <div class="sm:flex sm:items-start">
+              <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+                <svg class="h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                </svg>
+              </div>
+              <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Confirm New Case</h3>
+                <div class="mt-2 space-y-2 text-sm text-gray-600">
+                  <p>Please review the details below before saving the new case.</p>
+                  <ul class="list-disc list-inside bg-gray-50 p-3 rounded-md">
+                    <li><strong>Patient:</strong> {{ newCaseData().patientName }}</li>
+                    <li><strong>Accession #:</strong> {{ newCaseData().accession_number }}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+            <button type="button" (click)="confirmSave()" class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto">Confirm Save</button>
+            <button type="button" (click)="cancelSave()" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

@@ -1,0 +1,62 @@
+<div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+  <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+  <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+      <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+        <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+          <h3 class="text-lg font-semibold leading-6 text-gray-900" id="modal-title">Notification Settings</h3>
+          <div class="mt-4 space-y-6">
+            <fieldset>
+              <legend class="sr-only">Notification Settings</legend>
+              <div class="space-y-5">
+                <!-- Email on Critical Errors -->
+                <div class="relative flex items-start">
+                  <div class="flex h-6 items-center">
+                    <input #emailOnErrorInput id="email-on-error" name="email-on-error" type="checkbox"
+                           [checked]="formState().emailOnError"
+                           (change)="updateSetting('emailOnError', emailOnErrorInput.checked)"
+                           class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-600">
+                  </div>
+                  <div class="ml-3 text-sm leading-6">
+                    <label for="email-on-error" class="font-medium text-gray-900">Email on Critical Errors</label>
+                    <p class="text-gray-500">Send an email to system administrators when a critical error occurs.</p>
+                  </div>
+                </div>
+                <!-- Weekly Health Report -->
+                <div class="relative flex items-start">
+                  <div class="flex h-6 items-center">
+                    <input #weeklyReportInput id="weekly-report" name="weekly-report" type="checkbox"
+                           [checked]="formState().weeklyReport"
+                           (change)="updateSetting('weeklyReport', weeklyReportInput.checked)"
+                           class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-600">
+                  </div>
+                  <div class="ml-3 text-sm leading-6">
+                    <label for="weekly-report" class="font-medium text-gray-900">Weekly Health Report</label>
+                    <p class="text-gray-500">Send a summary report of system health and usage every Monday.</p>
+                  </div>
+                </div>
+                 <!-- MFA Enforced -->
+                <div class="relative flex items-start">
+                  <div class="flex h-6 items-center">
+                    <input #mfaEnforcedInput id="mfa-enforced" name="mfa-enforced" type="checkbox"
+                           [checked]="formState().mfaEnforced"
+                           (change)="updateSetting('mfaEnforced', mfaEnforcedInput.checked)"
+                           class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-600">
+                  </div>
+                  <div class="ml-3 text-sm leading-6">
+                    <label for="mfa-enforced" class="font-medium text-gray-900">Enforce Multi-Factor Authentication</label>
+                    <p class="text-gray-500">Require all users to set up MFA for added security.</p>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+        <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+          <button type="button" (click)="save()" class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto">Save</button>
+          <button type="button" (click)="close()" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

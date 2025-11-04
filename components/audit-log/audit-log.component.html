@@ -1,0 +1,62 @@
+<div class="space-y-6">
+  <div>
+    <button (click)="goBack()" class="inline-flex items-center text-sm font-medium text-gray-600 hover:text-gray-900">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 mr-2">
+        <path fill-rule="evenodd" d="M17 10a.75.75 0 0 1-.75.75H5.612l4.158 3.96a.75.75 0 1 1-1.04 1.08l-5.5-5.25a.75.75 0 0 1 0-1.08l5.5-5.25a.75.75 0 1 1 1.04 1.08L5.612 9.25H16.25A.75.75 0 0 1 17 10Z" clip-rule="evenodd" />
+      </svg>
+      Back to Dashboard
+    </button>
+  </div>
+
+  <div class="bg-white shadow sm:rounded-lg">
+    <div class="px-4 py-5 sm:p-6">
+      <h3 class="text-lg leading-6 font-medium text-gray-900">Audit Log</h3>
+      <p class="mt-1 max-w-2xl text-sm text-gray-500">A detailed record of all significant system activities.</p>
+    </div>
+    <div class="border-t border-gray-200">
+      <div class="flow-root">
+        <ul role="list" class="divide-y divide-gray-200">
+          @for(activity of activities(); track activity.id) {
+            <li class="p-4 sm:p-6 hover:bg-gray-50">
+              <div class="relative flex space-x-4">
+                <div class="flex-shrink-0">
+                   <span class="h-10 w-10 rounded-full flex items-center justify-center ring-8 ring-white" [class]="getIconBgClass(activity.icon)">
+                      @if (activity.icon === 'case_new') {
+                          <svg class="h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                          </svg>
+                      } @else if (activity.icon === 'case_closed') {
+                          <svg class="h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.052-.143z" clip-rule="evenodd" />
+                          </svg>
+                      } @else if (activity.icon === 'feedback_new') {
+                          <svg class="h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5 3.75A2.25 2.25 0 017.25 1.5h5.5A2.25 2.25 0 0115 3.75v12.5A2.25 2.25 0 0112.75 18.5h-5.5A2.25 2.25 0 015 16.25V3.75zm3.75 2.5a.75.75 0 000 1.5h2.5a.75.75 0 000-1.5h-2.5z" clip-rule="evenodd" />
+                          </svg>
+                      } @else if (activity.icon === 'system_update') {
+                        <svg class="h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M15.28 9.47a.75.75 0 010 1.06l-4.25 4.25a.75.75 0 11-1.06-1.06L14.44 10 10 5.56a.75.75 0 011.06-1.06l4.25 4.25zM4.72 9.47a.75.75 0 011.06 0l4.25 4.25a.75.75 0 11-1.06 1.06L4.44 10l4.47-4.47a.75.75 0 011.06 1.06L5.78 10l-1.06-1.06z" clip-rule="evenodd" />
+                        </svg>
+                      } @else if (activity.icon === 'action_cache') {
+                         <svg class="h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>
+                      } @else if (activity.icon === 'action_restart') {
+                        <svg class="h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0011.667 0l3.182-3.182m0 0a8.25 8.25 0 00-11.667 0l-3.182 3.182M2.985 19.644l-3.182-3.182a8.25 8.25 0 0111.667 0l3.181 3.183" /></svg>
+                      } @else {
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-white">
+                          <path d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.095a1.23 1.23 0 00.41-1.412A9.99 9.99 0 0010 12c-2.31 0-4.438.784-6.131 2.095z" />
+                        </svg>
+                      }
+                  </span>
+                </div>
+                <div class="flex-1">
+                  <p class="text-sm text-gray-800">{{ activity.text }}</p>
+                  <p class="mt-0.5 text-sm text-gray-500">{{ activity.timestamp }}</p>
+                </div>
+              </div>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
