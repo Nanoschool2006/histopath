@@ -1,0 +1,5 @@
+{
+  "name": "Pathogeniu- AI Histopathology Platform",
+  "description": "A web application for pathologists to manage cases, view slides, and leverage AI for analysis. This platform provides dashboards and a case management system with AI-powered natural language search.",
+  "requestFramePermissions": []
+}
